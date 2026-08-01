@@ -1,5 +1,6 @@
 import React from "react";
-import Coupon from "./Coupon";
+// import Coupon from "./Coupon";
+import CouponForm from "./CoupanForm";
 
 function CartSummary() {
   return (
@@ -29,7 +30,7 @@ function CartSummary() {
           <h1 className="font-bold tracking-wide text-2xl">Total</h1>
           <h1 className="font-bold tracking-wide text-2xl">$90.00</h1>
         </div>
-        <Coupon />
+        <CouponForm />
       </div>
     </div>
   );

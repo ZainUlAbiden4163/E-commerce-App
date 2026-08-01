@@ -81,6 +81,7 @@ export default function ProductDetails() {
                 <ProductActions
                   availabilityStatus={product.availabilityStatus}
                   minimumOrderQuantity={product.minimumOrderQuantity}
+                  product={product}
                 />
               </div>
             </div>

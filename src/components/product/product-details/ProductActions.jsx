@@ -2,14 +2,29 @@ import { useState } from "react";
 import QuantitySelector from "./QuantitySelector";
 import Button from "../../ui/Button";
 import { HeartIcon } from "../../ui/icons";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../features/cart/cartSlice";
 
 export default function ProductActions({
   availabilityStatus,
   minimumOrderQuantity,
+  product,
 }) {
+  const dispath = useDispatch();
+
   const [wishlisted, setWishlisted] = useState(false);
   const inStock = availabilityStatus === "In Stock";
-
+  function handleAddToCart() {
+    dispath(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        image: product.thumbnail,
+        price: product.price,
+        quantity: 1,
+      }),
+    );
+  }
   return (
     <div className="border border-black/10 rounded-lg p-4">
       <span className="text-sm text-[#6B6558]">Quantity</span>
@@ -18,7 +33,12 @@ export default function ProductActions({
       </div>
 
       <div className="mt-4 flex flex-col gap-3">
-        <Button variant="primary" fullWidth disabled={!inStock}>
+        <Button
+          variant="primary"
+          fullWidth
+          disabled={!inStock}
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </Button>
 

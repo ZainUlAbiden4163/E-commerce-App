@@ -1,64 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
+import { Trash2 } from "lucide-react";
 
-function CartItem() {
-  const [count, setCount] = useState(1);
-  function handleIncrease() {
-    setCount((prev) => prev + 1);
-  }
-  function handleDecrease() {
-    if (count === 1) return;
-    setCount((prev) => prev - 1);
-  }
+import QuantitySelector from "./QuantitySelector";
+import Price from "../ui/Price";
+
+function CartItem({ item, onIncrease, onDecrease, onRemove }) {
   return (
-    <div className="flex px-5 py-2 border border-gray-100 items-center justify-evenly">
-      <div className="flex items-center gap-2   px-2">
-        <h1 className="bg-gray-300 rounded-xl w-20 h-20 flex items-center justify-center">
-          IMG
-        </h1>
-        <div className="px-1 py-3">
-          <h2 className="text-xl font-normal tracking-wide">
-            Green Tea Face Wash
-          </h2>
-          <p className="font-light text-gray-400">Brand: Nature Republic</p>
-          <p className="font-light text-gray-400">Beauty</p>
+    <div className="flex items-center justify-between gap-6 rounded-2xl border border-gray-200 p-5 transition hover:shadow-sm">
+      {/* Product */}
+      <div className="flex items-center gap-4 flex-1">
+        <div className="h-24 w-24 overflow-hidden rounded-xl bg-gray-100">
+          <img
+            src={item.thumbnail}
+            alt={item.title}
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold">{item.title}</h2>
+
+          <p className="text-sm text-gray-500">Brand: {item.brand}</p>
+
+          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs">
+            {item.category}
+          </span>
         </div>
       </div>
-      <div className="  px-2">
-        <h2 className="text-xl font-normal tracking-wide">$12.99</h2>
-        <p className="font-light text-gray-300">
-          {" "}
-          <span className="line-through">$16.99</span>{" "}
-          <span className="bg-red-200 text-red-800 px-2 py-1 rounded-md">
-            -24%
-          </span>
+
+      {/* Price */}
+      <Price price={item.price} originalPrice={item.originalPrice} />
+
+      {/* Quantity */}
+      <QuantitySelector
+        quantity={item.quantity}
+        onIncrease={onIncrease}
+        onDecrease={onDecrease}
+      />
+
+      {/* Total */}
+      <div className="w-28 text-right">
+        <p className="text-lg font-semibold">
+          ${(item.price * item.quantity).toFixed(2)}
         </p>
       </div>
-      <div className="flex items-center gap-5">
-        <div className="">
-          <div className="border-2 border-gray-300 rounded-md text-xl flex px-3 py-1 gap-2">
-            <button
-              onClick={handleDecrease}
-              type="button"
-              className="cursor-pointer"
-            >
-              -
-            </button>
-            <p className="px-1">{count}</p>
-            <button
-              onClick={handleIncrease}
-              type="button"
-              className="cursor-pointer"
-            >
-              +
-            </button>
-          </div>
-        </div>
-        <div className="">
-          <div className="border-2 border-gray-300 rounded-md text-xl  px-2 py-2 items-center justify-center flex ">
-            <h1>DLT</h1>
-          </div>
-        </div>
-      </div>
+
+      {/* Delete */}
+      <button
+        type="button"
+        onClick={onRemove}
+        className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-200 text-red-500 transition hover:bg-red-50"
+      >
+        <Trash2 size={18} />
+      </button>
     </div>
   );
 }
